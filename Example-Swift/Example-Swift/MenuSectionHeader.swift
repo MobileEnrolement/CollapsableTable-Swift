@@ -7,13 +7,14 @@
 //
 
 import UIKit
+import CollapsableTable
 
-class MenuSectionHeaderView: UITableViewHeaderFooterView, RRNCollapsableSectionHeaderProtocol {
+class MenuSectionHeaderView: UITableViewHeaderFooterView, CollapsableTableViewSectionHeaderProtocol {
     
     @IBOutlet weak var sectionTitleLabel: UILabel!
     @IBOutlet weak var arrowImageView: UIImageView!
     
-    var interactionDelegate: RRNCollapsableSectionHeaderReactiveProtocol!
+    var interactionDelegate: CollapsableTableViewSectionHeaderInteractionProtocol!
     
     func radians(degrees: Double) -> Double {
         return M_PI * degrees / 180.0

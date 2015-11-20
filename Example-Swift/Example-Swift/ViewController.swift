@@ -7,14 +7,15 @@
 //
 
 import UIKit
+import CollapsableTable
 
-class ViewController: RRNCollapsableTableViewController {
+class ViewController: CollapsableTableViewController {
 
     @IBOutlet weak var tableView: UITableView!
     
     let menu = ModelBuilder.buildMenu()
     
-    override func model() -> [RRNCollapsableSectionItemProtocol]? {
+    override func model() -> [CollapsableTableViewSectionModelProtocol]? {
         return menu
     }
 

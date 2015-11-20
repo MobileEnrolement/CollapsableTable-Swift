@@ -1,5 +1,5 @@
 //
-//  RRNCollapsableTableScene.swift
+//  CollapsableTableScene.swift
 //  Example-Swift
 //
 //  Created by Robert Nash on 22/09/2015.
@@ -8,9 +8,9 @@
 
 import UIKit
 
-class RRNCollapsableTableViewController: UIViewController {
+public class CollapsableTableViewController: UIViewController {
     
-    override func viewDidLoad() {
+    override public func viewDidLoad() {
         super.viewDidLoad()
         
         if let
@@ -23,44 +23,44 @@ class RRNCollapsableTableViewController: UIViewController {
         }
     }
     
-    func collapsableTableView() -> UITableView? {
+    public func collapsableTableView() -> UITableView? {
         return nil
     }
     
-    func model() -> [RRNCollapsableSectionItemProtocol]? {
+    public func model() -> [CollapsableTableViewSectionModelProtocol]? {
         return nil
     }
     
-    func singleOpenSelectionOnly() -> Bool {
+    public func singleOpenSelectionOnly() -> Bool {
         return false
     }
     
-    func sectionHeaderNibName() -> String? {
+    public func sectionHeaderNibName() -> String? {
         return nil
     }
     
-    func sectionHeaderReuseIdentifier() -> String? {
+    public func sectionHeaderReuseIdentifier() -> String? {
         return self.sectionHeaderNibName()?.stringByAppendingString("ID")
     }
 }
 
-extension RRNCollapsableTableViewController: UITableViewDataSource {
+extension CollapsableTableViewController: UITableViewDataSource {
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    public func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return (self.model() ?? []).count
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let menuSection = self.model()?[section]
         return (menuSection?.isVisible ?? false) ? menuSection!.items.count : 0
     }
-    
-    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+  
+    public func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
-        var view: RRNCollapsableSectionHeaderProtocol?
+        var view: CollapsableTableViewSectionHeaderProtocol?
         
         if let reuseID = self.sectionHeaderReuseIdentifier() {
-            view = tableView.dequeueReusableHeaderFooterViewWithIdentifier(reuseID) as? RRNCollapsableSectionHeaderProtocol
+            view = tableView.dequeueReusableHeaderFooterViewWithIdentifier(reuseID) as? CollapsableTableViewSectionHeaderProtocol
         }
         
         view?.tag = section
@@ -72,16 +72,16 @@ extension RRNCollapsableTableViewController: UITableViewDataSource {
         return view as? UIView
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         return UITableViewCell()
     }
 }
 
-extension RRNCollapsableTableViewController: UITableViewDelegate {
+extension CollapsableTableViewController: UITableViewDelegate {
     
-    func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+    public func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         
-        if let view = view as? RRNCollapsableSectionHeaderProtocol {
+        if let view = view as? CollapsableTableViewSectionHeaderProtocol {
             let menuSection = self.model()?[section]
             if (menuSection?.isVisible ?? false) {
                 view.open(false)
@@ -92,9 +92,9 @@ extension RRNCollapsableTableViewController: UITableViewDelegate {
     }
 }
 
-extension RRNCollapsableTableViewController: RRNCollapsableSectionHeaderReactiveProtocol {
+extension CollapsableTableViewController: CollapsableTableViewSectionHeaderInteractionProtocol {
     
-    func userTapped(view: RRNCollapsableSectionHeaderProtocol) {
+    public func userTapped(view: CollapsableTableViewSectionHeaderProtocol) {
         
         if let tableView = self.collapsableTableView() {
             
@@ -144,7 +144,7 @@ extension RRNCollapsableTableViewController: RRNCollapsableSectionHeaderReactive
                         
                         let headerView = tableView.headerViewForSection(count)
                         
-                        if let headerView = headerView as? RRNCollapsableSectionHeaderProtocol {
+                        if let headerView = headerView as? CollapsableTableViewSectionHeaderProtocol {
                             headerView.close(true)
                         }
                         
@@ -163,7 +163,7 @@ extension RRNCollapsableTableViewController: RRNCollapsableSectionHeaderReactive
         }
     }
     
-    func indexPaths(section: Int, menuSection: RRNCollapsableSectionItemProtocol) -> [NSIndexPath] {
+    private func indexPaths(section: Int, menuSection: CollapsableTableViewSectionModelProtocol) -> [NSIndexPath] {
         var collector = [NSIndexPath]()
         
         var indexPath: NSIndexPath

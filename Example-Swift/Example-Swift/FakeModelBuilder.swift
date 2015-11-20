@@ -7,8 +7,9 @@
 //
 
 import Foundation
+import CollapsableTable
 
-class MenuSection: RRNCollapsableSectionItemProtocol  {
+class MenuSection: CollapsableTableViewSectionModelProtocol  {
     
     var title: String
     var isVisible: Bool
@@ -23,9 +24,9 @@ class MenuSection: RRNCollapsableSectionItemProtocol  {
 
 class ModelBuilder {
     
-    class func buildMenu() -> [RRNCollapsableSectionItemProtocol] {
+    class func buildMenu() -> [CollapsableTableViewSectionModelProtocol] {
         
-        var collector = [RRNCollapsableSectionItemProtocol]()
+        var collector = [CollapsableTableViewSectionModelProtocol]()
         
         for var i = 0; i < 5; i++ {
             

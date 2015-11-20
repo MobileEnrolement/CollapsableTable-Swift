@@ -1,4 +1,4 @@
 language: swift
-xcode_project: Example-Swift/Example-Swift.xcodeproj
+xcode_project: OpenMe.xcworkspace
 xcode_scheme: Example-Swift
 xcode_sdk: iphonesimulator
