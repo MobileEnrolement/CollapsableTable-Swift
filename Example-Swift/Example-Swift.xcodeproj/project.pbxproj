@@ -15,6 +15,8 @@
 		503643BC1BB17371009D4547 /* MenuSectionHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 503643BB1BB17371009D4547 /* MenuSectionHeaderView.xib */; };
 		503643BE1BB173D9009D4547 /* MenuSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 503643BD1BB173D9009D4547 /* MenuSectionHeader.swift */; };
 		503643C41BB18DCA009D4547 /* FakeModelBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 503643C31BB18DCA009D4547 /* FakeModelBuilder.swift */; };
+		C92008551BFFA54100C0696E /* CollapsableTable.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C92008541BFFA54100C0696E /* CollapsableTable.framework */; };
+		C92008561BFFA54100C0696E /* CollapsableTable.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C92008541BFFA54100C0696E /* CollapsableTable.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -24,6 +26,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				C92008561BFFA54100C0696E /* CollapsableTable.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -41,6 +44,7 @@
 		503643BB1BB17371009D4547 /* MenuSectionHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MenuSectionHeaderView.xib; sourceTree = "<group>"; };
 		503643BD1BB173D9009D4547 /* MenuSectionHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuSectionHeader.swift; sourceTree = "<group>"; };
 		503643C31BB18DCA009D4547 /* FakeModelBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FakeModelBuilder.swift; sourceTree = "<group>"; };
+		C92008541BFFA54100C0696E /* CollapsableTable.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = CollapsableTable.framework; path = "/Users/rnash/Library/Developer/Xcode/DerivedData/Development-dwtbhlrpgzjtckghxcjpvxdjygbb/Build/Products/Debug-iphoneos/CollapsableTable.framework"; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -48,6 +52,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C92008551BFFA54100C0696E /* CollapsableTable.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -80,6 +85,7 @@
 				503643BB1BB17371009D4547 /* MenuSectionHeaderView.xib */,
 				503643C31BB18DCA009D4547 /* FakeModelBuilder.swift */,
 				503643C61BB1AD18009D4547 /* Supporting Files */,
+				C92008541BFFA54100C0696E /* CollapsableTable.framework */,
 			);
 			path = "Example-Swift";
 			sourceTree = "<group>";
