@@ -15,23 +15,8 @@
 		503643BC1BB17371009D4547 /* MenuSectionHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 503643BB1BB17371009D4547 /* MenuSectionHeaderView.xib */; };
 		503643BE1BB173D9009D4547 /* MenuSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 503643BD1BB173D9009D4547 /* MenuSectionHeader.swift */; };
 		503643C41BB18DCA009D4547 /* FakeModelBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 503643C31BB18DCA009D4547 /* FakeModelBuilder.swift */; };
-		C92008551BFFA54100C0696E /* CollapsableTable.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C92008541BFFA54100C0696E /* CollapsableTable.framework */; };
-		C92008561BFFA54100C0696E /* CollapsableTable.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C92008541BFFA54100C0696E /* CollapsableTable.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		C945FF421BFFF39A00717429 /* CollapsableTable.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C945FF411BFFF39A00717429 /* CollapsableTable.framework */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		C9E08CBE1BFE9F90008299FE /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				C92008561BFFA54100C0696E /* CollapsableTable.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		5029FF791BB1B09100BE0D47 /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
@@ -44,7 +29,7 @@
 		503643BB1BB17371009D4547 /* MenuSectionHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MenuSectionHeaderView.xib; sourceTree = "<group>"; };
 		503643BD1BB173D9009D4547 /* MenuSectionHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuSectionHeader.swift; sourceTree = "<group>"; };
 		503643C31BB18DCA009D4547 /* FakeModelBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FakeModelBuilder.swift; sourceTree = "<group>"; };
-		C92008541BFFA54100C0696E /* CollapsableTable.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = CollapsableTable.framework; path = "/Users/rnash/Library/Developer/Xcode/DerivedData/Development-dwtbhlrpgzjtckghxcjpvxdjygbb/Build/Products/Debug-iphoneos/CollapsableTable.framework"; sourceTree = "<absolute>"; };
+		C945FF411BFFF39A00717429 /* CollapsableTable.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CollapsableTable.framework; path = "../../CollapsableTable/build/Debug-iphoneos/CollapsableTable.framework"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,7 +37,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C92008551BFFA54100C0696E /* CollapsableTable.framework in Frameworks */,
+				C945FF421BFFF39A00717429 /* CollapsableTable.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -84,8 +69,8 @@
 				503643BD1BB173D9009D4547 /* MenuSectionHeader.swift */,
 				503643BB1BB17371009D4547 /* MenuSectionHeaderView.xib */,
 				503643C31BB18DCA009D4547 /* FakeModelBuilder.swift */,
+				C945FF411BFFF39A00717429 /* CollapsableTable.framework */,
 				503643C61BB1AD18009D4547 /* Supporting Files */,
-				C92008541BFFA54100C0696E /* CollapsableTable.framework */,
 			);
 			path = "Example-Swift";
 			sourceTree = "<group>";
@@ -110,7 +95,6 @@
 				503643941BB172FB009D4547 /* Sources */,
 				503643951BB172FB009D4547 /* Frameworks */,
 				503643961BB172FB009D4547 /* Resources */,
-				C9E08CBE1BFE9F90008299FE /* Embed Frameworks */,
 			);
 			buildRules = (
 			);

@@ -3,7 +3,7 @@
    LastUpgradeVersion = "0700"
    version = "1.3">
    <BuildAction
-      parallelizeBuildables = "YES"
+      parallelizeBuildables = "NO"
       buildImplicitDependencies = "YES">
       <BuildActionEntries>
          <BuildActionEntry
@@ -18,6 +18,20 @@
                BuildableName = "Example-Swift.app"
                BlueprintName = "Example-Swift"
                ReferencedContainer = "container:Example-Swift.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "C973174A1BFE984A00CEEA19"
+               BuildableName = "CollapsableTable.framework"
+               BlueprintName = "CollapsableTable"
+               ReferencedContainer = "container:../CollapsableTable/CollapsableTable.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
