@@ -1,3 +1,6 @@
+[![GitHub license](https://img.shields.io/badge/license-MIT-lightgrey.svg)](https://raw.githubusercontent.com/rob-nash/CollapsableTable-Swift/master/LICENSE.md)
+[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
+
 ![](http://i.imgur.com/jDq37Ip.gif?1)
 ![](http://i.imgur.com/77YQhPE.gif?1)
 
@@ -17,10 +20,7 @@ In XCode, select 'Add Files To Project', and select the following
 	* override 'model' and return a pointer to an array of objects, which conform to CollapsableTableViewSectionModelProtocol Protocol.
 	* override 'sectionHeaderNibName' and return the filename of the nib you created in step 2.
 
-Try the Demo by running the 'Example' scheme in the 'OpenMe' workspace.
+Try the Demo by running the 'Example' scheme in the 'Development' workspace.
 
-## Upcoming
-* Carthage support
-
-## License
-CollapsableTable-Swift is released under the MIT license. See 'LICENSE' for details.
+## Contributions
+Please use the 'Development' workspace.
