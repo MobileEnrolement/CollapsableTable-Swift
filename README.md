@@ -4,6 +4,9 @@
 ![](http://i.imgur.com/jDq37Ip.gif?1)
 ![](http://i.imgur.com/77YQhPE.gif?1)
 
+#Description
+The creative design of your UI, remains yours. All I offer here, is a protocol.
+
 ## Requirements
 XCode 7.0+, iOS 8.1+
 
