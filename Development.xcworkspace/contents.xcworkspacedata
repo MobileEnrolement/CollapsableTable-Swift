@@ -2,9 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:CollapsableTable/CollapsableTable.xcodeproj">
+      location = "group:Code/Example-Swift/Example-Swift.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:Example-Swift/Example-Swift.xcodeproj">
+      location = "group:Code/CollapsableTable/CollapsableTable.xcodeproj">
    </FileRef>
 </Workspace>
