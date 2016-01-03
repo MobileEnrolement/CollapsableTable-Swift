@@ -42,6 +42,10 @@ public class CollapsableTableViewController: UIViewController {
     public func sectionHeaderReuseIdentifier() -> String? {
         return self.sectionHeaderNibName()?.stringByAppendingString("ID")
     }
+    
+    public func shouldCollapse(tableSection: Int) -> Bool {
+        return true
+    }
 }
 
 extension CollapsableTableViewController: UITableViewDataSource {
@@ -122,9 +126,14 @@ extension CollapsableTableViewController: CollapsableTableViewSectionHeaderInter
                         
                         view.close(true)
                         
-                        let indexPaths = self.indexPaths(section, menuSection: menuSection)
+                        let shouldCollapse = self.shouldCollapse(section)
                         
-                        tableView.deleteRowsAtIndexPaths(indexPaths, withRowAnimation: (foundOpenUnchosenMenuSection) ? .Bottom : .Top)
+                        if (shouldCollapse) {
+                            let indexPaths = self.indexPaths(section, menuSection: menuSection)
+                            tableView.deleteRowsAtIndexPaths(indexPaths, withRowAnimation: (foundOpenUnchosenMenuSection) ? .Bottom : .Top)
+                        } else {
+                            tableView.reloadSections(NSIndexSet(index: section), withRowAnimation: .Fade)
+                        }
                         
                     } else if !isVisible && chosenMenuSection {
                         
@@ -132,9 +141,14 @@ extension CollapsableTableViewController: CollapsableTableViewSectionHeaderInter
                         
                         view.open(true)
                         
-                        let indexPaths = self.indexPaths(section, menuSection: menuSection)
+                        let shouldCollapse = self.shouldCollapse(section)
                         
-                        tableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: (foundOpenUnchosenMenuSection) ? .Bottom : .Top)
+                        if (shouldCollapse) {
+                            let indexPaths = self.indexPaths(section, menuSection: menuSection)
+                            tableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: (foundOpenUnchosenMenuSection) ? .Bottom : .Top)
+                        } else {
+                            tableView.reloadSections(NSIndexSet(index: section), withRowAnimation: .Fade)
+                        }
                         
                     } else if isVisible && !chosenMenuSection && self.singleOpenSelectionOnly() {
                         
@@ -148,9 +162,15 @@ extension CollapsableTableViewController: CollapsableTableViewSectionHeaderInter
                             headerView.close(true)
                         }
                         
-                        let indexPaths = self.indexPaths(count, menuSection: menuSection)
+                        let shouldCollapse = self.shouldCollapse(section)
                         
-                        tableView.deleteRowsAtIndexPaths(indexPaths, withRowAnimation: (view.tag > count) ? .Top : .Bottom)
+                        if (shouldCollapse) {
+                            let indexPaths = self.indexPaths(count, menuSection: menuSection)
+                            tableView.deleteRowsAtIndexPaths(indexPaths, withRowAnimation: (view.tag > count) ? .Top : .Bottom)
+                        } else {
+                            tableView.reloadSections(NSIndexSet(index: section), withRowAnimation: .Fade)
+                        }
+                        
                     }
                     
                     count++

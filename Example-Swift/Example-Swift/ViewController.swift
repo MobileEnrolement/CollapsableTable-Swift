@@ -27,6 +27,11 @@ class ViewController: CollapsableTableViewController {
         return true
     }
     
+    override func shouldCollapse(tableSection: Int) -> Bool {
+        let menuSection = self.model()?[tableSection]
+        return (menuSection?.items ?? []).count < 1000
+    }
+    
     override func collapsableTableView() -> UITableView? {
         return tableView
     }

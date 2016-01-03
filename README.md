@@ -25,5 +25,8 @@ In XCode, select 'Add Files To Project', and select the following
 
 Try the Demo by running the 'Example' scheme in the 'Development' workspace.
 
+## Known issues
+If you have > 8,000-10,000 rows in any given table view section, the framerate drops to a noticable level.
+
 ## Contributions
 Please use the 'Development' workspace.
