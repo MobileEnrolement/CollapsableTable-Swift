@@ -17,7 +17,7 @@ public protocol CollapsableTableViewSectionHeaderProtocol {
 }
 
 public protocol CollapsableTableViewSectionHeaderInteractionProtocol {
-    func userTapped(view: CollapsableTableViewSectionHeaderProtocol)
+    func userTappedView<T: UITableViewHeaderFooterView where T: CollapsableTableViewSectionHeaderProtocol>(view: T, atPoint:CGPoint)
 }
 
 public protocol CollapsableTableViewSectionModelProtocol {

@@ -59,6 +59,13 @@ class MenuSectionHeaderView: UITableViewHeaderFooterView, CollapsableTableViewSe
     }
     
     override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        interactionDelegate?.userTapped(self)
+        
+        super.touchesEnded(touches, withEvent: event)
+        
+        guard let touch = touches.first else {
+            return
+        }
+
+        interactionDelegate?.userTappedView(self, atPoint: touch.locationInView(self))
     }
 }

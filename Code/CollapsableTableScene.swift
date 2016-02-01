@@ -43,9 +43,6 @@ public class CollapsableTableViewController: UIViewController {
         return self.sectionHeaderNibName()?.stringByAppendingString("ID")
     }
     
-    public func shouldCollapse(tableSection: Int) -> Bool {
-        return true
-    }
 }
 
 extension CollapsableTableViewController: UITableViewDataSource {
@@ -66,8 +63,6 @@ extension CollapsableTableViewController: UITableViewDataSource {
         if let reuseID = self.sectionHeaderReuseIdentifier() {
             view = tableView.dequeueReusableHeaderFooterViewWithIdentifier(reuseID) as? CollapsableTableViewSectionHeaderProtocol
         }
-        
-        view?.tag = section
         
         let menuSection = self.model()?[section]
         view?.sectionTitleLabel.text = (menuSection?.title ?? "")
@@ -98,89 +93,90 @@ extension CollapsableTableViewController: UITableViewDelegate {
 
 extension CollapsableTableViewController: CollapsableTableViewSectionHeaderInteractionProtocol {
     
-    public func userTapped(view: CollapsableTableViewSectionHeaderProtocol) {
+    public func userTappedView<T : UITableViewHeaderFooterView where T : CollapsableTableViewSectionHeaderProtocol>(headerView: T, atPoint location: CGPoint) {
         
-        if let tableView = self.collapsableTableView() {
+        guard let tableView = self.collapsableTableView() else {
+            return;
+        }
             
-            let section = view.tag
+        guard let tappedSection = sectionForUserSelectionInTableView(tableView, atTouchLocation: location, inView: headerView) else {
+            return
+        }
+        
+        guard let collection = self.model() else {
+            return
+        }
+        
+        var foundOpenUnchosenMenuSection = false
+        
+        var section = 0
+        
+        tableView.beginUpdates()
+        
+        for var model in collection {
             
-            tableView.beginUpdates()
-            
-            var foundOpenUnchosenMenuSection = false
-            
-            let menu = self.model()
-            
-            if let menu = menu {
+            if tappedSection == section {
                 
-                var count = 0
+                model.isVisible = !model.isVisible
                 
-                for var menuSection in menu {
-                    
-                    let chosenMenuSection = (section == count)
-                    
-                    let isVisible = menuSection.isVisible
-                    
-                    if isVisible && chosenMenuSection {
-                        
-                        menuSection.isVisible = false
-                        
-                        view.close(true)
-                        
-                        let shouldCollapse = self.shouldCollapse(section)
-                        
-                        if (shouldCollapse) {
-                            let indexPaths = self.indexPaths(section, menuSection: menuSection)
-                            tableView.deleteRowsAtIndexPaths(indexPaths, withRowAnimation: (foundOpenUnchosenMenuSection) ? .Bottom : .Top)
-                        } else {
-                            tableView.reloadSections(NSIndexSet(index: section), withRowAnimation: .Fade)
-                        }
-                        
-                    } else if !isVisible && chosenMenuSection {
-                        
-                        menuSection.isVisible = true
-                        
-                        view.open(true)
-                        
-                        let shouldCollapse = self.shouldCollapse(section)
-                        
-                        if (shouldCollapse) {
-                            let indexPaths = self.indexPaths(section, menuSection: menuSection)
-                            tableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: (foundOpenUnchosenMenuSection) ? .Bottom : .Top)
-                        } else {
-                            tableView.reloadSections(NSIndexSet(index: section), withRowAnimation: .Fade)
-                        }
-                        
-                    } else if isVisible && !chosenMenuSection && self.singleOpenSelectionOnly() {
-                        
-                        foundOpenUnchosenMenuSection = true
-                        
-                        menuSection.isVisible = false
-                        
-                        let headerView = tableView.headerViewForSection(count)
-                        
-                        if let headerView = headerView as? CollapsableTableViewSectionHeaderProtocol {
-                            headerView.close(true)
-                        }
-                        
-                        let shouldCollapse = self.shouldCollapse(section)
-                        
-                        if (shouldCollapse) {
-                            let indexPaths = self.indexPaths(count, menuSection: menuSection)
-                            tableView.deleteRowsAtIndexPaths(indexPaths, withRowAnimation: (view.tag > count) ? .Top : .Bottom)
-                        } else {
-                            tableView.reloadSections(NSIndexSet(index: section), withRowAnimation: .Fade)
-                        }
-                        
-                    }
-                    
-                    count++
+                toggleCollapseTableViewSectionAtSection(section,
+                    withModel:model,
+                    inTableView: tableView,
+                    usingAnimation: (foundOpenUnchosenMenuSection) ? .Bottom : .Top,
+                    forSectionWithHeaderFooterView: headerView
+                )
+                
+            } else if model.isVisible && self.singleOpenSelectionOnly() {
+                
+                foundOpenUnchosenMenuSection = true
+                
+                model.isVisible = !model.isVisible
+                
+                guard let headerView = tableView.headerViewForSection(section) as? CollapsableTableViewSectionHeaderProtocol else {
+                    return
                 }
+                
+                toggleCollapseTableViewSectionAtSection(section,
+                    withModel: model,
+                    inTableView: tableView,
+                    usingAnimation: (tappedSection > section) ? .Top : .Bottom,
+                    forSectionWithHeaderFooterView: headerView
+                )
                 
             }
             
-            tableView.endUpdates()
-            
+            section++
         }
+        
+        tableView.endUpdates()
+        
+    }
+    
+    func toggleCollapseTableViewSectionAtSection(section: Int, withModel model: CollapsableTableViewSectionModelProtocol, inTableView tableView:UITableView, usingAnimation animation:UITableViewRowAnimation, forSectionWithHeaderFooterView headerFooterView: CollapsableTableViewSectionHeaderProtocol) {
+        
+        let indexPaths = self.indexPaths(section, menuSection: model)
+        
+        if model.isVisible {
+            headerFooterView.open(true)
+            tableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: animation)
+        } else {
+            headerFooterView.close(true)
+            tableView.deleteRowsAtIndexPaths(indexPaths, withRowAnimation: animation)
+        }
+    }
+    
+    func sectionForUserSelectionInTableView(tableView: UITableView, atTouchLocation location:CGPoint, inView view: UIView) -> Int? {
+        
+        let point = tableView.convertPoint(location, fromView: view)
+        
+        for var i = 0; i < tableView.numberOfSections; i++ {
+            let rect = tableView.rectForHeaderInSection(i)
+            if CGRectContainsPoint(rect, point) {
+                return i
+            }
+        }
+        
+        return nil
     }
     
     private func indexPaths(section: Int, menuSection: CollapsableTableViewSectionModelProtocol) -> [NSIndexPath] {
