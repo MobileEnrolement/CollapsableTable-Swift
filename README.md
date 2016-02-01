@@ -5,10 +5,10 @@
 ![](http://i.imgur.com/77YQhPE.gif?1)
 
 #Description
-The creative design of your UI, remains yours. All I offer here, is a protocol.
+A subclass of UIViewController. The creative design is 100% the responsibility of the implementing developer. So plenty of freedom to create any look.
 
 ## Requirements
-XCode 7.0+, iOS 8.1+
+XCode 7.0+, iOS 8.0+
 
 ## Installation
 In XCode, select 'Add Files To Project', and select the following
