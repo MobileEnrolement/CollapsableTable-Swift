@@ -188,7 +188,7 @@ extension CollapsableTableViewController: CollapsableTableViewSectionHeaderInter
         
     }
     
-    func toggleCollapseTableViewSectionAtSection(section: Int, withModel model: CollapsableTableViewSectionModelProtocol, inTableView tableView:UITableView, usingAnimation animation:UITableViewRowAnimation, forSectionWithHeaderFooterView headerFooterView: CollapsableTableViewSectionHeaderProtocol) {
+    private func toggleCollapseTableViewSectionAtSection(section: Int, withModel model: CollapsableTableViewSectionModelProtocol, inTableView tableView:UITableView, usingAnimation animation:UITableViewRowAnimation, forSectionWithHeaderFooterView headerFooterView: CollapsableTableViewSectionHeaderProtocol) {
         
         let indexPaths = self.indexPaths(section, menuSection: model)
         
@@ -201,13 +201,12 @@ extension CollapsableTableViewController: CollapsableTableViewSectionHeaderInter
         }
     }
     
-    func sectionForUserSelectionInTableView(tableView: UITableView, atTouchLocation location:CGPoint, inView view: UIView) -> Int? {
+    private func sectionForUserSelectionInTableView(tableView: UITableView, atTouchLocation location:CGPoint, inView view: UIView) -> Int? {
         
         let point = tableView.convertPoint(location, fromView: view)
         
         for var i = 0; i < tableView.numberOfSections; i++ {
-            let rect = tableView.rectForHeaderInSection(i)
-            if CGRectContainsPoint(rect, point) {
+            if CGRectContainsPoint(tableView.rectForHeaderInSection(i), point) {
                 return i
             }
         }
