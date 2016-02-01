@@ -31,16 +31,22 @@ import UIKit
 public class CollapsableTableViewController: UIViewController {
     
     override public func viewDidLoad() {
+        
         super.viewDidLoad()
         
-        if let
-                tableView = self.collapsableTableView(),
-                nibName = self.sectionHeaderNibName(),
-                reuseID = self.sectionHeaderReuseIdentifier()
-        {
-            let nib = UINib(nibName: nibName, bundle: nil)
-            tableView.registerNib(nib, forHeaderFooterViewReuseIdentifier: reuseID)
+        guard let tableView = collapsableTableView() else {
+            return
         }
+        
+        guard let nibName = sectionHeaderNibName() else {
+            return
+        }
+        
+        guard let reuseID = sectionHeaderReuseIdentifier() else {
+            return
+        }
+        
+        tableView.registerNib(UINib(nibName: nibName, bundle: nil), forHeaderFooterViewReuseIdentifier: reuseID)
     }
     
     /*!
@@ -74,9 +80,9 @@ public class CollapsableTableViewController: UIViewController {
     public func sectionHeaderNibName() -> String? {
         return nil
     }
-    
+
     public func sectionHeaderReuseIdentifier() -> String? {
-        return self.sectionHeaderNibName()?.stringByAppendingString("ID")
+        return sectionHeaderNibName()?.stringByAppendingString("ID")
     }
     
 }
@@ -84,46 +90,69 @@ public class CollapsableTableViewController: UIViewController {
 extension CollapsableTableViewController: UITableViewDataSource {
     
     public func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return (self.model() ?? []).count
-    }
-    
-    public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let menuSection = self.model()?[section]
-        return (menuSection?.isVisible ?? false) ? menuSection!.items.count : 0
-    }
-  
-    public func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
-        var view: CollapsableTableViewSectionHeaderProtocol?
-        
-        if let reuseID = self.sectionHeaderReuseIdentifier() {
-            view = tableView.dequeueReusableHeaderFooterViewWithIdentifier(reuseID) as? CollapsableTableViewSectionHeaderProtocol
+        guard let model = self.model() else {
+            return 0
         }
         
-        let menuSection = self.model()?[section]
-        view?.sectionTitleLabel.text = (menuSection?.title ?? "")
-        view?.interactionDelegate = self
+        return model.count
+    }
+
+    public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        guard let model = self.model() else {
+            return 0
+        }
+        
+        let menuSection = model[section]
+        
+        return (menuSection.isVisible ?? false) ? menuSection.items.count : 0
+    }
+
+    public func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        
+        guard let reuseID = self.sectionHeaderReuseIdentifier() else {
+            return nil
+        }
+        
+        guard var view = tableView.dequeueReusableHeaderFooterViewWithIdentifier(reuseID) as? CollapsableTableViewSectionHeaderProtocol else {
+            return nil
+        }
+        
+        guard let model = self.model() else {
+            return nil
+        }
+        
+        view.sectionTitleLabel.text = (model[section].title ?? "")
+        view.interactionDelegate = self
         
         return view as? UIView
     }
-    
+
     public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         return UITableViewCell()
     }
+    
 }
 
 extension CollapsableTableViewController: UITableViewDelegate {
     
     public func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         
-        if let view = view as? CollapsableTableViewSectionHeaderProtocol {
-            let menuSection = self.model()?[section]
-            if (menuSection?.isVisible ?? false) {
-                view.open(false)
-            } else {
-                view.close(false)
-            }
+        guard let view = view as? CollapsableTableViewSectionHeaderProtocol else {
+            return
         }
+        
+        guard let model = self.model() else {
+            return
+        }
+        
+        if (model[section].isVisible ?? false) {
+            view.open(false)
+        } else {
+            view.close(false)
+        }
+        
     }
 }
 
@@ -155,12 +184,7 @@ extension CollapsableTableViewController: CollapsableTableViewSectionHeaderInter
                 
                 model.isVisible = !model.isVisible
                 
-                toggleCollapseTableViewSectionAtSection(section,
-                    withModel:model,
-                    inTableView: tableView,
-                    usingAnimation: (foundOpenUnchosenMenuSection) ? .Bottom : .Top,
-                    forSectionWithHeaderFooterView: headerView
-                )
+                toggleCollapseTableViewSectionAtSection(section, withModel:model, inTableView: tableView, usingAnimation: (foundOpenUnchosenMenuSection) ? .Bottom : .Top, forSectionWithHeaderFooterView: headerView)
                 
             } else if model.isVisible && self.singleOpenSelectionOnly() {
                 
@@ -168,17 +192,11 @@ extension CollapsableTableViewController: CollapsableTableViewSectionHeaderInter
                 
                 model.isVisible = !model.isVisible
                 
-                guard let headerView = tableView.headerViewForSection(section) as? CollapsableTableViewSectionHeaderProtocol else {
+                guard let untappedHeaderView = tableView.headerViewForSection(section) as? CollapsableTableViewSectionHeaderProtocol else {
                     return
                 }
                 
-                toggleCollapseTableViewSectionAtSection(section,
-                    withModel: model,
-                    inTableView: tableView,
-                    usingAnimation: (tappedSection > section) ? .Top : .Bottom,
-                    forSectionWithHeaderFooterView: headerView
-                )
-                
+                toggleCollapseTableViewSectionAtSection(section, withModel: model, inTableView: tableView, usingAnimation: (tappedSection > section) ? .Top : .Bottom, forSectionWithHeaderFooterView: untappedHeaderView)
             }
             
             section++
@@ -215,12 +233,11 @@ extension CollapsableTableViewController: CollapsableTableViewSectionHeaderInter
     }
     
     private func indexPaths(section: Int, menuSection: CollapsableTableViewSectionModelProtocol) -> [NSIndexPath] {
+        
         var collector = [NSIndexPath]()
         
-        var indexPath: NSIndexPath
         for var i = 0; i < menuSection.items.count; i++ {
-            indexPath = NSIndexPath(forRow: i, inSection: section)
-            collector.append(indexPath)
+            collector.append(NSIndexPath(forRow: i, inSection: section))
         }
         
         return collector
